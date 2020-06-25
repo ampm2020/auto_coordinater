@@ -1,0 +1,9 @@
+@charset "UTF-8";
+body{
+	background-color:#FFFFCC;
+	
+	padding-left: 70px;
+}
+select{
+	width: 130px;
+}
