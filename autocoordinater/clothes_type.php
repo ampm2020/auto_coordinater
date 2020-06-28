@@ -12,6 +12,9 @@ $clothes_type_tops = [
     "parker" => "パーカー",
     "sweat" => "スウェット",
     "jijan" => "ジージャン",
+    "seta" =>"セーター",
+    "cardigan" => "カーディガン",
+    "cardign_chack" =>"カーディガン(チャック付)",
     "outer_thin" => "アウター(薄)",
     "outer_thick" => "アウター(厚)",
 ];

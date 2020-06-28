@@ -3,7 +3,6 @@ require('header.php');
 require('dbconnect.php');
 require('clothes_type.php');
 
-
 if(!empty($_POST)){
     //エラーチェック
     //ファイルが空

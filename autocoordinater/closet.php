@@ -6,7 +6,6 @@ require('clothes_type.php');
 //画像を配列として取得
 $result = array();
 //全取得（仮）Javascript等で行う方法もあるらしい
-//不具合：この方法で表示すると削除が機能しない
 if($_POST['checkall']== 'on'){
     foreach($clothes_type_tops as $type => $val):
         $sql = $db->prepare('SELECT id, picture FROM clothes WHERE type=?');
@@ -51,7 +50,7 @@ else if(!empty($_POST['type'])){
 $cnt = 0;
 foreach($clothes_type_tops as $key => $val):
     echo '<input type="checkbox" name="type[]" value="'. $key . '">' . $val;
-    $cnt++; if($cnt===5){echo '<br>';}
+    $cnt++; if($cnt%5===0){echo '<br>';}
 endforeach;
 echo '<br>';
 foreach($clothes_type_bottoms as $key => $val):
@@ -70,7 +69,7 @@ if(!empty($result)):
         <!---削除処理--->
         <form method="post" name="form<?php echo $cnt ?>" action="delete_clothe.php" style="display:inline">
             <input type="hidden" name="clothe_id" value="<?php echo $res['id']?>">
-            <a href="javascript:form1.submit()">削除</a>
+            <a href="javascript:form<?php echo $cnt ?>.submit()">削除</a>
         </form>
         <?php $cnt++;?>
     <?php endforeach;
