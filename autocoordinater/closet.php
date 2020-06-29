@@ -5,28 +5,9 @@ require('clothes_type.php');
 
 //画像を配列として取得
 $result = array();
-//全取得（仮）Javascript等で行う方法もあるらしい
-if($_POST['checkall']== 'on'){
-    foreach($clothes_type_tops as $type => $val):
-        $sql = $db->prepare('SELECT id, picture FROM clothes WHERE type=?');
-        $sql->bindparam(1, $type, PDO::PARAM_STR);
-        $sql->execute();
-        while($tmp = $sql->fetch()){
-        $result[] = $tmp;
-        }
-    endforeach; 
 
-    foreach($clothes_type_bottoms as $type => $val):
-        $sql = $db->prepare('SELECT id, picture FROM clothes WHERE type=?');
-        $sql->bindparam(1, $type, PDO::PARAM_STR);
-        $sql->execute();
-        while($tmp = $sql->fetch()){
-        $result[] = $tmp;
-        }
-    endforeach;
-}
 //sqlでテーブルを取得してwhile(fetch)で1行ずつ取り出す
-else if(!empty($_POST['type'])){
+if(!empty($_POST['type'])){
     foreach($_POST['type'] as $type):
     $sql = $db->prepare('SELECT id, picture FROM clothes WHERE type=?');
     $sql->bindparam(1, $type, PDO::PARAM_STR);
@@ -43,8 +24,8 @@ else if(!empty($_POST['type'])){
 <a href="toppage.php">戻る</a><br><br>
 
 <!---検索フォーム--->
-<form action="" method="post">
-<input type="checkbox" name="checkall" value="on">すべて表示
+<form name="form" action="" method="post">
+<input type="checkbox" name="all" onClick="AllChecked();" /> 全選択
 <br>
 <?php
 $cnt = 0;
@@ -60,12 +41,24 @@ endforeach;
 <br><input type="submit" value="表示">
 </form>
 
+<script language="JavaScript" type="text/javascript">
+<!--
+function AllChecked(){
+  var check =  document.form.all.checked;
+
+  for (var i=0; i<document.form.elements['type[]'].length; i++){
+    document.form.elements['type[]'][i].checked = check;
+  }
+}
+//-->
+</script>
+
 <!---画像を表示する--->
 <?php
 if(!empty($result)):
     $cnt = 1;
     foreach($result as $res):?>
-        <a href=""><img src="cloth_images/<?php echo $res['picture']?>" width="200" height="200"></a>
+        <a href="clothe_images/<?php echo $res['picture']?>"><img src="cloth_images/<?php echo $res['picture']?>" width="200" height="200"></a>
         <!---削除処理--->
         <form method="post" name="form<?php echo $cnt ?>" action="delete_clothe.php" style="display:inline">
             <input type="hidden" name="clothe_id" value="<?php echo $res['id']?>">

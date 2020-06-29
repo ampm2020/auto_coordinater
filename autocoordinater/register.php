@@ -14,7 +14,7 @@ if(!empty($_POST)){
         $error['type'] = 'blank';
     }
     if(empty($error)){
-        echo "登録しました<br>";
+        $message = "登録しました";
 	    $statement = $db->prepare('INSERT INTO clothes SET owner="test", divide=?, type=?,picture=?');
 	    $statement->execute(array(
 		    $_POST['divide'],
@@ -26,14 +26,15 @@ if(!empty($_POST)){
 ?>
 
 <h1>☆服の登録☆</h1>
+<?php echo '<div class="success">'.$message.'</div>'; ?>
 <a href="closet.php">戻る</a>
 <div id="content">
 <form action="" method="post" class="regist" enctype="multipart/form-data">
 	<dl>
 		<dt>【画像】</dt>
-        <?php if($error['file']==='blank'):
-                echo '※ファイルが選択されていません';
-              endif;?>
+        <?php if($error['file']==='blank'):?>
+                <div class="alart">※ファイルが選択されていません</div>
+              <?php endif; ?>
 		<dd>
         	<input type="file" name="picture" size="35" value="test"/>
         </dd>
@@ -44,9 +45,9 @@ if(!empty($_POST)){
             <input type="radio" name="divide" value="bottoms">ボトムス
         </dd>
         <dt>【分類】</dt>
-        <?php if($error['type']==='blank'):
-                echo '※服のタイプを選んでください';
-              endif; ?>
+        <?php if($error['type']==='blank'):?>
+                <div class="alart">※服のタイプを選んでください</div>
+             <?php endif; ?>
         <dd>
             <select name="type">
                 <option value="tops">----トップス----</option>

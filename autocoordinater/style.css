@@ -1,9 +1,23 @@
-@charset "UTF-8";
+@import url('https://fonts.googleapis.com/css?family=Noto+Sans+JP');
+
 body{
-	background-color:#FFFFCC;
-	
+	background-color:azure;	
 	padding-left: 70px;
 }
+h1{
+	font-family: 'Noto Sans JP', sans-serif;
+}
+
 select{
 	width: 130px;
+}
+
+.alart{
+	color: red;
+	font-size: 90%;
+}
+.success{
+	color: red;
+	font-size: 200%;
+	font-weight: 700;
 }
