@@ -5,7 +5,6 @@
 */
 $clothes_type_tops = [
     "inner" => "インナー",
-    "inner_hot" => "インナー(暖)",
     "t_short" => "Tシャツ(半袖)",
     "t_long" => "Tシャツ(長袖)",
     "poro" => "ポロシャツ",
@@ -15,7 +14,7 @@ $clothes_type_tops = [
     "jijan" => "ジージャン",
     "seta" =>"セーター",
     "cardigan" => "カーディガン",
-    "cardigan_chack" =>"カーディガン(チャック付)",
+    "cardigan_chack" =>"カーディガン(ﾁｬｯｸ)",
     "outer_thin" => "アウター(薄)",
     "outer_thick" => "アウター(厚)",
 ];

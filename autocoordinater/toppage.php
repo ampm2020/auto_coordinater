@@ -36,7 +36,7 @@ if(!is_empty($_POST['max_temperature']) && !is_empty($_POST['min_temperature']))
 }
 ?>
 
-<h1>自動コーディネータ　ver0.2</h1>
+<h1>自動コーディネータ　ver0.3</h1>
 <p>その日の気温に合わせていい感じの服を勝手に選んでくれます。</p>
 <form action="" method="post">
     <?php if($error["temperature"]==="blank"):?>
@@ -50,13 +50,13 @@ if(!is_empty($_POST['max_temperature']) && !is_empty($_POST['min_temperature']))
 <!---検索結果の表示--->
 <?php if(!empty($selected_tops)):
     foreach($selected_tops as $top):?>
-        <a href="clothe_images/<?php echo $top['picture']?>" target="_blank"><img src="clothe_images/<?php echo $top['picture']?>" width="200" height="200"></a>
+        <a href="upload/<?php echo $top['picture']?>" target="_blank"><img src="upload/<?php echo $top['picture']?>" width="200" height="200"></a>
     <?php endforeach;
 endif; ?>
 
 <?php if(!empty($selected_bottoms)):
     foreach($selected_bottoms as $bottom):?>
-        <a href="clothe_images/<?php echo $bottom['picture']?>"><img src="clothe_images/<?php echo $bottom['picture']?>" width="200" height="200"></a>
+        <a href="upload/<?php echo $bottom['picture']?>"><img src="upload/<?php echo $bottom['picture']?>" width="200" height="200"></a>
     <?php endforeach;
 endif;?>
 <br>
@@ -81,4 +81,4 @@ endif;?>
 <br><br><!---仮--->
 <a href="closet.php"><img src="pictures/closet.png" class="closet"width="120" height="120" alt="衣服管理"></a>
 <?php require('footer.php')?><br><br>
-<a href="details.php">細かい仕様</a>
+<a href="details.php">このページについて</a>

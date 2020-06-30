@@ -18,6 +18,15 @@ select{
 }
 .success{
 	color: red;
-	font-size: 200%;
+	font-size: 150%;
 	font-weight: 700;
+}
+li{
+	width:11em;
+	float:left;
+}
+ul{
+	list-style:none;
+	width:800px;
+	overflow:hidden;
 }
