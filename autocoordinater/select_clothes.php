@@ -1,8 +1,6 @@
 <?php
 /*
 気温に合わせて実際に服を選ぶスクリプト
-基本的には最低気温を基準にしています（朝は寒いため）
-同じ最低気温のとき、最高気温が高いと一部の脱ぎにくい服が選択されなくなります（未実装）
 */
 
 //clothesテーブルから任意の種類の服１枚のidと画像名を取得
@@ -33,77 +31,77 @@ function select_clothes(&$db, &$array, ...$types){
     }
 }
 
-//26度以上 暑い。半袖
-if($min_temperature >= 26){
-    select_clothes($db, $selected_tops,"t_short", "poro");
-    select_clothes($db, $selected_bottoms, "chino_thin");
+//23度以上 暑い。半袖
+if($min_temperature >= 23){
+    select_clothes($db, $selected_tops,"t_short", "poro","other1");
+    select_clothes($db, $selected_bottoms, "chino_thin", "other_b");
 }
-//22~25度　あったかい。半袖～薄手のシャツとか
-else if($min_temperature >= 22){
+//19~22度　あったかい。半袖～薄手のシャツとか
+else if($min_temperature >= 19){
     $r = rand(1, 2);//１なら2枚、2なら１枚着る
     if($r===1){
         if($max_temperature >=26){
-        select_clothes($db, $selected_tops, "t_short");           
+        select_clothes($db, $selected_tops, "t_short","other1");           
         }else{
-        select_clothes($db, $selected_tops, "t_short", "inner");
+        select_clothes($db, $selected_tops, "t_short", "inner","other1");
         }
-        select_clothes($db, $selected_tops, "t_long", "check", "poro");
+        select_clothes($db, $selected_tops, "t_long", "check", "poro","other2");
     }
     if($r===2 || count($selected_tops) < 2){
         unset($selected_tops);
-        select_clothes($db, $selected_tops, "t_short", "poro", "t_long");       
+        select_clothes($db, $selected_tops, "t_short", "poro", "t_long","other2");       
     }
-    select_clothes($db, $selected_tops, "chino_thin");
+    select_clothes($db, $selected_tops, "chino_thin","other_b");
 
 }
-//19~21度　過ごしやすい。半袖+薄手の長袖
-else if($min_temperature >= 19){
+//16~18度　過ごしやすい。半袖+薄手の長袖
+else if($min_temperature >= 16){
     if($max_temperature >=26){
-        select_clothes($db, $selected_tops, "t_short");           
+        select_clothes($db, $selected_tops, "t_short","other1");           
     }else{
-        select_clothes($db, $selected_tops, "t_short", "inner");
+        select_clothes($db, $selected_tops, "t_short", "inner","other1");
         }
-    select_clothes($db, $selected_tops, "t_long", "check");
-    select_clothes($db, $selected_bottoms, "chino_thin");
+    select_clothes($db, $selected_tops, "t_long", "check","other2");
+    select_clothes($db, $selected_bottoms, "chino_thin", "other_b");
 }
-//14~18度 ちょっと寒い。3枚重ね。最高気温がこのくらいなら厚手のズボンもありかも。
-else if($min_temperature >= 14){
+//11~15度 ちょっと寒い。3枚重ね。最高気温がこのくらいなら厚手のズボンもありかも。
+else if($min_temperature >= 11){
     if($max_temperature >=26){
-        select_clothes($db, $selected_tops, "t_short");           
+        select_clothes($db, $selected_tops, "t_short","other1");           
     }else{
-        select_clothes($db, $selected_tops, "t_short", "inner");
+        select_clothes($db, $selected_tops, "t_short", "inner","other1");
         }
-    select_clothes($db, $selected_tops, "t_long", "check");
+    select_clothes($db, $selected_tops, "t_long", "check","other2");
     if($max_temperature >= 19){
-    select_clothes($db, $selected_tops, "parker","jijan","cardigan_check");        
+    select_clothes($db, $selected_tops, "parker","check_thick","cardigan_check","other3");        
     }else{
-    select_clothes($db, $selected_tops, "parker", "trainer", "jijan", "seta", "cardigan", "cardigan_check");
+    select_clothes($db, $selected_tops, "parker", "trainer", "check_thick", "seta", "cardigan", "cardigan_check","other3");
     }
-    select_clothes($db, $selected_bottoms, "chino_thin"); 
+    select_clothes($db, $selected_bottoms, "chino_thin","other3"); 
 }
-//10~13度 寒そう。3枚+アウター。ヒートテックや厚手のズボンも。
-else if($min_temperature >= 10){
-    select_clothes($db, $selected_tops, "t_short", "inner", "inner_hot");
-    select_clothes($db, $selected_tops, "t_long", "check");
+//7~10度 寒そう。3枚+アウター。ヒートテックや厚手のズボンも。
+else if($min_temperature >= 7){
+    select_clothes($db, $selected_tops, "t_short", "inner","other1");
+    select_clothes($db, $selected_tops, "t_long", "check","other2");
     if($max_temperature >= 19){
-    select_clothes($db, $selected_tops, "parker","jijan","cardigan_check");        
+    select_clothes($db, $selected_tops, "parker","check_thick","cardigan_check","other3");        
     }else{
-    select_clothes($db, $selected_tops, "parker", "trainer", "jijan", "seta", "cardigan", "cardigan_check");
+    select_clothes($db, $selected_tops, "parker", "trainer", "check_thick", "seta", "cardigan", "cardigan_check","other3");
     }
-    select_clothes($db, $selected_tops, "outer_thin");
-    select_clothes($db, $selected_bottoms, "chino_thin", "chino_thick");
+    select_clothes($db, $selected_tops, "outer_thin", "other4");
+    select_clothes($db, $selected_bottoms, "chino_thin", "chino_thick", "other_b");
 
-//9度以下 寒い。3枚+厚いアウター
-}else if($min_temperature > -20){
-    select_clothes($db, $selected_tops, "t_short", "inner", "inner_hot");
-    select_clothes($db, $selected_tops, "t_long", "check");
+//6度以下 寒い。3枚+厚いアウター
+}else if($min_temperature > -50){
+    select_clothes($db, $selected_tops, "t_short", "inner","other1");
+    select_clothes($db, $selected_tops, "t_long", "check", "other2");
     if($max_temperature >= 19){
-    select_clothes($db, $selected_tops, "parker","jijan","cardigan_check");        
+    select_clothes($db, $selected_tops, "parker","check_thick","cardigan_check","other3");        
     }else{
-    select_clothes($db, $selected_tops, "parker", "trainer", "jijan", "seta", "cardigan", "cardigan_check");
+    select_clothes($db, $selected_tops, "parker", "trainer", "check_thick", "seta", "cardigan", "cardigan_check","other3");
     }
-    select_clothes($db, $selected_tops, "outer_thin", "outer_thick");
-    select_clothes($db, $selected_bottoms, "chino_thin", "chino_thick");
+    select_clothes($db, $selected_tops, "outer_thin", "outer_thick","other4");
+    select_clothes($db, $selected_bottoms, "chino_thin", "chino_thick","other_b");
 }else{
     //条件に合う服がない場合 デバッグ用
     echo "寒すぎるので外に出ない方がよいです";

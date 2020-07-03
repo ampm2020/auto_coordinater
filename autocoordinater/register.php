@@ -35,7 +35,7 @@ if(!empty($_POST)){
         }
 
         if (empty($error) && move_uploaded_file ( $old_name, 'upload/' . $new_name )) {
-            $msg = '登録しました';
+            $msg = '追加しました';
         } else {
             $msg = 'アップロードに失敗しました';
         }
@@ -50,15 +50,17 @@ if(!empty($_POST)){
     }
 }
 ?>
-
-<h1>新しい服の登録</h1>
-<p>服の画像と種類を選んで「決定」ボタンを押してください</p>
-<div><?php echo $msg?></div>
-<a href="closet.php">戻る</a>
+<?php if($msg == "追加しました"):?>
+<br><div id="complete"><?php echo $msg?></div><br>
+<?php else:?>
+<h1>服を追加する</h1>
+<p>服の画像と種類を選んで「追加」ボタンを押してください</p>
+<?php endif; ?>
+<a href="closet.php"><img src="pictures/navigationj_back.png" width="100" height="50"></a>
 <div id="content">
 <form action="" method="post" class="regist" enctype="multipart/form-data">
 	<dl>
-		<dt>【画像】※jpg、pngのみ対応</dt>
+		<dt>【画像】※jpg、jpeg、pngのみ対応</dt>
         <?php if($error['file']==='blank'):?>
                 <div class="alart">※ファイルが選択されていません</div>
               <?php endif; ?>
@@ -91,10 +93,15 @@ if(!empty($_POST)){
             </select>
         </dd>
 	</dl>
-	<div><input type="submit" value="決定" /></div>
+	<div><input type="submit" value="追加" /></div>
 </form>
 </div>
-
+<br><hr>
+<div>
+    ・分類について<br>
+    作成者の都合に合わせて作っているため、全ての服を網羅しているわけではありません。<br> 
+    ちょうどいい選択肢がない場合は「その他」を選んでください。   
+</div>
 <script>
 function previewImage(obj)
 {

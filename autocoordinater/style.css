@@ -7,6 +7,21 @@ body{
 h1{
 	font-family: 'Noto Sans JP', sans-serif;
 }
+.add{
+	font-size: 23px;
+	font-weight: bold;
+}
+
+input#view{
+	padding: 3px 10px;
+	font-size: 1em;
+	margin-left: 40px;
+}
+.coordinate{
+	padding: 3px 10xpx;
+	font-size: 1em;
+	margin-top: 5px;
+}
 
 select{
 	width: 130px;
@@ -17,16 +32,61 @@ select{
 	font-size: 90%;
 }
 .success{
-	color: red;
+	color: orange;
 	font-size: 150%;
 	font-weight: 700;
 }
+span#return{
+	margin-left: 50px;
+}
+a.return{
+	font-size: 17px;
+}
+
+div#search{
+	font-size: 20px;
+	margin-top: 30px;
+}
+form#search{
+	margin-top: -15px;
+	margin-left: -30px;
+}
+
 li{
 	width:11em;
 	float:left;
 }
 ul{
 	list-style:none;
-	width:800px;
+	width:1000px;
 	overflow:hidden;
 }
+table#temp {
+	border-collapse: collapse;
+}
+th {
+	border: solid 1px;
+	padding: 0.5em;
+}
+td#temp {
+	border: solid 1px;
+	padding: 0.5em;
+}
+span.futoi{
+	font-weight: bold;
+}
+div#complete{
+	font-size: x-large;
+	font-weight: bold;
+}
+img#detail{
+	max-width: 400px;
+	max-height: 400px;
+}
+input.allcheck{
+	padding: 3px 10px;
+	font-size: 0.8em;
+	margin-left: 30px;
+	margin-top: 3px;
+}
+
