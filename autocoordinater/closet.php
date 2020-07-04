@@ -5,13 +5,19 @@ require('dbconnect.php');
 require('clothes_type.php');
 
 $result = array();
+if(!empty($_SESSION['name'])){
+    $name = $_SESSION['name'];
+}else{
+    $name = "gest";
+}
 
 //チェックボックスが１つ以上選択されている状態で、「表示」ボタンが押された場合
 if(!empty($_POST['type'])){
     $_SESSION['checkbox'] = array();
     foreach($_POST['type'] as $type):
-    $sql = $db->prepare('SELECT id, picture FROM clothes WHERE type=?');
-    $sql->bindparam(1, $type, PDO::PARAM_STR);
+    $sql = $db->prepare('SELECT id, picture FROM clothes WHERE owner=? and type=?');
+    $sql->bindparam(1, $name, PDO::PARAM_STR);
+    $sql->bindparam(2, $type, PDO::PARAM_STR);    
     $sql->execute();
     while($tmp = $sql->fetch()){
     $result[] = $tmp;
@@ -21,8 +27,9 @@ if(!empty($_POST['type'])){
 //拡大画面および削除画面から戻ってきた場合は、前回のチェック状況を保持する
 }else if($_POST['return'] == "true" && !empty($_SESSION['checkbox'])){
     foreach($_SESSION['checkbox'] as $type):
-        $sql = $db->prepare('SELECT id, picture FROM clothes WHERE type=?');
-        $sql->bindparam(1, $type, PDO::PARAM_STR);
+        $sql = $db->prepare('SELECT id, picture FROM clothes WHERE owner=? and type=?');
+        $sql->bindparam(1, $name, PDO::PARAM_STR);
+        $sql->bindparam(2, $type, PDO::PARAM_STR);   
         $sql->execute();
         while($tmp = $sql->fetch()){
         $result[] = $tmp;
@@ -31,18 +38,14 @@ if(!empty($_POST['type'])){
 }else{
     $_SESSION['checkbox'] = array();
 }
- /*   foreach($_SESSION['checkbox'] as $box){
-        echo $box." ";
-    }*/
 ?>
 
-<h1>クローゼット</h1>
-<p>現在持っている服を検索・削除したり、新しい服を追加することができます。</p>
+<h1>衣服管理ページ</h1>
+<p>服をデータベースに追加したり、登録済みの服の検索・削除が行えます。</p>
 <a href="register.php" class="add">●服を追加する</a><br>
-<a href="toppage.php"><img src="pictures/navigationj_back.png" width="100" height="50"></a>
-
+<a href="toppage.php"><img src="pictures/navigationj_back.png" width="100" height="50" style="margin-bottom: 20px;"></a>
+<div style="font-size: 125%">【検索】</div>
 <!---検索フォーム--->
-<div id="search">【検索フォーム】</div>
 <form id="search" name="form" action="" method="post">
 <ul>
 <?php foreach($clothes_type_tops as $key => $val):?>

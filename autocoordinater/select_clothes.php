@@ -7,9 +7,14 @@
 function select_clothes(&$db, &$array, ...$types){
     $time = date('Y-m-d', strtotime('-1 day'));//今日、または昨日着た服を選択肢から除外
     $len = count($types);
+    if(!empty($_SESSION['name'])){
+        $name = $_SESSION['name'];
+    }else{
+        $name = "gest";
+    }
 
     //sql文の作成
-    $sql = 'SELECT id, type, picture FROM clothes WHERE used_date<"';
+    $sql = 'SELECT id, type, picture FROM clothes WHERE owner=? and used_date<"';
     $sql .= $time.'" and (';
     for($i=0; $i<$len; $i++){
         $sql .= 'type="'.$types[$i].'" ';
@@ -18,7 +23,8 @@ function select_clothes(&$db, &$array, ...$types){
     }
     $sql .= 'ORDER BY RAND() LIMIT 1';
     //echo $sql.'<br>'; //※デバッグ用
-    $result = $db->query($sql);
+    $result = $db->prepare($sql);
+    $result->execute(array($name));
     $is_get = false;
     while($res = $result->fetch()){
         $array[] = $res;
@@ -26,7 +32,7 @@ function select_clothes(&$db, &$array, ...$types){
     }
     //条件に合う服を取得できなかった場合は、代わりにその旨が伝わる画像をセットする
     if(!$is_get){
-        $tmp = ['id' => 0, 'picture' => "no_image_square.png",];
+        $tmp = ['id' => 0, 'picture' => "10195no_image_square.png",];
         $array[] = $tmp;
     }
 }
@@ -45,7 +51,7 @@ else if($min_temperature >= 19){
         }else{
         select_clothes($db, $selected_tops, "t_short", "inner","other1");
         }
-        select_clothes($db, $selected_tops, "t_long", "check", "poro","other2");
+        select_clothes($db, $selected_tops, "t_long", "check","other2");
     }
     if($r===2 || count($selected_tops) < 2){
         unset($selected_tops);
@@ -104,7 +110,6 @@ else if($min_temperature >= 7){
     select_clothes($db, $selected_bottoms, "chino_thin", "chino_thick","other_b");
 }else{
     //条件に合う服がない場合 デバッグ用
-    echo "寒すぎるので外に出ない方がよいです";
     select_clothes($db, $selected_tops, "null");
     select_clothes($db, $selected_bottoms, "null");
 }

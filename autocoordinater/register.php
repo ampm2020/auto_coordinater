@@ -1,4 +1,5 @@
 <?php 
+session_start();
 require('header.php');
 require('dbconnect.php');
 require('clothes_type.php');
@@ -42,19 +43,20 @@ if(!empty($_POST)){
     }
     //データベースに登録する
     if(empty($error)){
-	    $statement = $db->prepare('INSERT INTO clothes SET owner="test", type=?,picture=?');
+	    $statement = $db->prepare('INSERT INTO clothes SET owner=?, type=?,picture=?');
 	    $statement->execute(array(
+            $_SESSION['name'],
 		    $_POST['type'],
 		    $new_name,
         ));
     }
 }
 ?>
-<?php if($msg == "追加しました"):?>
+<?php if($msg === "追加しました"):?>
 <br><div id="complete"><?php echo $msg?></div><br>
 <?php else:?>
-<h1>服を追加する</h1>
-<p>服の画像と種類を選んで「追加」ボタンを押してください</p>
+<h1>服の登録</h1>
+<p>画像と種類を選んで「追加」ボタンを押してください。</p>
 <?php endif; ?>
 <a href="closet.php"><img src="pictures/navigationj_back.png" width="100" height="50"></a>
 <div id="content">
@@ -93,13 +95,12 @@ if(!empty($_POST)){
             </select>
         </dd>
 	</dl>
-	<div><input type="submit" value="追加" /></div>
+	<div><input class="regist" type="submit" value="追加" /></div>
 </form>
 </div>
 <br><hr>
 <div>
     ・分類について<br>
-    作成者の都合に合わせて作っているため、全ての服を網羅しているわけではありません。<br> 
     ちょうどいい選択肢がない場合は「その他」を選んでください。   
 </div>
 <script>

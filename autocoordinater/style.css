@@ -18,7 +18,7 @@ input#view{
 	margin-left: 40px;
 }
 .coordinate{
-	padding: 3px 10xpx;
+	padding: 3px 10px;
 	font-size: 1em;
 	margin-top: 5px;
 }
@@ -88,5 +88,19 @@ input.allcheck{
 	font-size: 0.8em;
 	margin-left: 30px;
 	margin-top: 3px;
+}
+input.regist{
+	padding: 3px 10px;
+	font-size: 1.0em;
+	margin-top: 3px;
+}
+p#after_msg{
+	font-size: 1.5em;
+	font-family: "arial black";
+	font-weight: bold;
+	color:rgb(19, 223, 111);
+}
+p.arial{
+	font-family: "arial";
 }
 

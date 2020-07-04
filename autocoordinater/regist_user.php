@@ -29,16 +29,16 @@ if(!empty($_POST)){
 
 <h1>アカウント作成</h1>
 <?php
-if($error['name']==='blank')echo'※アカウント名が空です。<br>';
-if($error['password']==='blank')echo'※パスワードが空です。<br>';
-if($error['name']==='registed')echo'※登録済みのアカウント名です。<br>';
+if($error['name']==='blank')echo'<div class="alart">※ニックネームが空です。</div>';
+if($error['password']==='blank')echo'<div class="alart">※パスワードが空です。</div>';
+if($error['name']==='registed')echo'<div class="alart">※登録済みのアカウント名です。</div>';
 ?>
 <form action="" method="post"><table>
-<tr><td>アカウント名</td><td><input type="textbox" name="name"></td></tr>
+<tr><td>ニックネーム</td><td><input type="textbox" name="name"></td></tr>
 <tr><td>パスワード</td><td><input type="password" name="password"></td></tr>
 <tr><td><input type="submit" value="ユーザー登録"></td></tr>
 </table><form>
-※アカウント名は重複不可です<br><br>
+<br><br>
 <a href="login.php"><img src="pictures/navigationj_back.png" width="100" height="50" style="margin-bottom: -20px;"></a>
 
 <?php require('footer.php'); ?>

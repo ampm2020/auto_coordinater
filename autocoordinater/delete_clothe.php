@@ -20,7 +20,7 @@ unlink($pass);
 <img src="pictures/oosouji_gomidashi.png">
 <form action="closet.php" name="re" method="post">
     <input type="hidden" name="return" value="true">
-    <a class="return" href="javascript:re.submit()">戻る</a>
+    <a class="return" href="javascript:re.submit()"><img src="pictures/navigationj_back.png" width="100" height="50"></a>
 </form>
 
 <?php require('footer.php') ?>
