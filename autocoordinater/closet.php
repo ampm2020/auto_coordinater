@@ -3,6 +3,7 @@ session_start();
 require('header.php');
 require('dbconnect.php');
 require('clothes_type.php');
+require('logincheck.php');
 
 $result = array();
 if(!empty($_SESSION['name'])){
@@ -43,7 +44,7 @@ if(!empty($_POST['type'])){
 <h1>衣服管理ページ</h1>
 <p>服をデータベースに追加したり、登録済みの服の検索・削除が行えます。</p>
 <a href="register.php" class="add">●服を追加する</a><br>
-<a href="toppage.php"><img src="pictures/navigationj_back.png" width="100" height="50" style="margin-bottom: 20px;"></a>
+<a href="index.php"><img src="pictures/navigationj_back.png" width="100" height="50" style="margin-bottom: 20px;"></a>
 <div style="font-size: 125%">【検索】</div>
 <!---検索フォーム--->
 <form id="search" name="form" action="" method="post">

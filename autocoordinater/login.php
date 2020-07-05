@@ -5,7 +5,7 @@ require('dbconnect.php');
 
 //二重ログイン対策(未実装)
 if(!empty($_SESSION)){
-    header('Location: toppage.php');
+    header('Location: index.php');
     exit();
 }
 
@@ -29,7 +29,7 @@ if(!empty($_POST)){
 
             setcookie('Cookie', $member['name'], time()+60*60*24*7);
 
-            header('Location: toppage.php');
+            header('Location: index.php');
             exit();
         }else{
             $error['login'] = 'failed';

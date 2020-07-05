@@ -2,6 +2,8 @@
 session_start();
 require('header.php');
 require('dbconnect.php');
+require('logincheck.php');
+
 $id = $_POST['id'];
 $sql = $db->prepare('SELECT id, picture FROM clothes WHERE id=?');
 $sql->bindparam(1, $id, PDO::PARAM_INT);

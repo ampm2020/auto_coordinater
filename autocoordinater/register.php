@@ -3,6 +3,7 @@ session_start();
 require('header.php');
 require('dbconnect.php');
 require('clothes_type.php');
+require('logincheck.php');
 
 if(!empty($_POST)){
     //エラーチェック

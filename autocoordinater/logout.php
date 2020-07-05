@@ -1,8 +1,10 @@
 <?php
 session_start();
 require('header.php');
+require('dbconnect.php');
+require('logincheck.php');
 
-setcookie('Cookie', $_SESSION['email'], time()-3600);
+setcookie('Cookie', $_SESSION['name'], time()-3600);
 $_SESSION = array();
 
 session_destroy();

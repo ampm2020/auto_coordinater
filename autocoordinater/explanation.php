@@ -1,7 +1,7 @@
 <?php 
 require('header.php');
 ?>
-<a href="toppage.php"><img src="pictures/navigationj_back.png" width="100" height="50" style="margin-bottom: -20px;"></a>
+<a href="index.php"><img src="pictures/navigationj_back.png" width="100" height="50" style="margin-bottom: -20px;"></a>
 <h1>これなに？</h1>
 <div>
     <p>・人間の代わりに着る服を選んでくれるアプリです。服選びに頭を使いたくなかったため作りました。</p>
