@@ -1,18 +1,17 @@
 <?php 
 session_start();
-require('header.php');
-require('dbconnect.php');
-require('clothes_type.php');
-require('logincheck.php');
+require_once('header.php');
+require_once('dbconnect.php');
+require_once('clothes_type.php');
+require_once('logincheck.php');
 
 $result = array();
-if(!empty($_SESSION['name'])){
-    $name = $_SESSION['name'];
-}else{
-    $name = "gest";
-}
+$name = $_SESSION['name'];
 
-//チェックボックスが１つ以上選択されている状態で、「表示」ボタンが押された場合
+/*
+「表示」ボタンが押された時の処理
+チェックボックスに１つ以上チェックが入っていた場合は一旦セッション変数を空にしてからチェック項目を記憶する
+*/
 if(!empty($_POST['type'])){
     $_SESSION['checkbox'] = array();
     foreach($_POST['type'] as $type):
@@ -25,7 +24,9 @@ if(!empty($_POST['type'])){
     }
     $_SESSION['checkbox'][] = $type;
     endforeach;
-//拡大画面および削除画面から戻ってきた場合は、前回のチェック状況を保持する
+/*
+拡大画面および削除画面から移動した場合は直前のチェック状況を保持する
+*/
 }else if($_POST['return'] == "true" && !empty($_SESSION['checkbox'])){
     foreach($_SESSION['checkbox'] as $type):
         $sql = $db->prepare('SELECT id, picture FROM clothes WHERE owner=? and type=?');
@@ -36,13 +37,17 @@ if(!empty($_POST['type'])){
         $result[] = $tmp;
         }
     endforeach;
+/*
+それ以外の場合はセッション変数を空にする
+*/
 }else{
     $_SESSION['checkbox'] = array();
 }
 ?>
 
-<h1>衣服管理ページ</h1>
-<p>服をデータベースに追加したり、登録済みの服の検索・削除が行えます。</p>
+<h1>管理ページ</h1>
+<p>ここでは服の登録、検索、削除を行うことができます。<br>
+画像をクリックすると拡大できます。</p>
 <a href="register.php" class="add">●服を追加する</a><br>
 <a href="index.php"><img src="pictures/navigationj_back.png" width="100" height="50" style="margin-bottom: 20px;"></a>
 <div style="font-size: 125%">【検索】</div>
@@ -62,11 +67,13 @@ if(!empty($_POST['type'])){
 </ul>
 <input id="view" type="submit" value="表示" style="float:left;">
 </form>
+
 <form action="" method="post" onsubmit="return false;">
     <input class="allcheck" type="submit" value="すべて選択" onClick ="AllChecked();">
     <input class="allcheck" type="submit" value="チェックを外す" onClick="AllUnChecked();">
 </form>
 
+<!---一度に全チェックを入れる/外す関数--->
 <script language="JavaScript" type="text/javascript">
 function AllChecked(){
   for (var i=0; i<document.form.elements['type[]'].length; i++){
@@ -95,4 +102,4 @@ if(!empty($result)):
 endif;?>
 <br>
         </form>
-<?php require('footer.php')?>
+<?php require_once('footer.php')?>

@@ -1,9 +1,9 @@
 <?php 
 session_start();
-require('header.php');
-require('dbconnect.php');
-require('clothes_type.php');
-require('logincheck.php');
+require_once('header.php');
+require_once('dbconnect.php');
+require_once('clothes_type.php');
+require_once('logincheck.php');
 
 if(!empty($_POST)){
     //エラーチェック
@@ -42,7 +42,7 @@ if(!empty($_POST)){
             $msg = 'アップロードに失敗しました';
         }
     }
-    //データベースに登録する
+    //エラーがなければデータベースに登録する
     if(empty($error)){
 	    $statement = $db->prepare('INSERT INTO clothes SET owner=?, type=?,picture=?');
 	    $statement->execute(array(
@@ -57,7 +57,7 @@ if(!empty($_POST)){
 <br><div id="complete"><?php echo $msg?></div><br>
 <?php else:?>
 <h1>服の登録</h1>
-<p>画像と種類を選んで「追加」ボタンを押してください。</p>
+<p>画像と種類を選んで「追加」ボタンを押してください。<br>
 <?php endif; ?>
 <a href="closet.php"><img src="pictures/navigationj_back.png" width="100" height="50"></a>
 <div id="content">
@@ -115,4 +115,4 @@ function previewImage(obj)
 }
 </script>
 
-<?php require('footer.php')?>
+<?php require_once('footer.php')?>

@@ -1,10 +1,10 @@
 <?php
 session_start();
-require('header.php');
-require('dbconnect.php');
-require('logincheck.php');
+require_once('header.php');
+require_once('dbconnect.php');
+require_once('logincheck.php');
 
-setcookie('Cookie', $_SESSION['name'], time()-3600);
+setcookie('Cookie', "", time()-3600);
 $_SESSION = array();
 
 session_destroy();
@@ -14,4 +14,4 @@ session_destroy();
 <img src="pictures/haloween_cat.png" width=200><br>
 <a href="login.php"><img src="pictures/navigationj_back.png" width="100" height="50"></a>
 
-<?php require('footer.php'); ?>
+<?php require_once('footer.php'); ?>

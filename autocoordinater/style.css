@@ -103,4 +103,7 @@ p#after_msg{
 p.arial{
 	font-family: "arial";
 }
+span.bold{
+	font-weight: bold;
+}
 

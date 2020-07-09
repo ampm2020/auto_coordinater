@@ -1,8 +1,8 @@
 <?php
 session_start();
-require('header.php');
-require('dbconnect.php');
-require('logincheck.php');
+require_once('header.php');
+require_once('dbconnect.php');
+require_once('logincheck.php');
 
 $id = $_POST['id'];
 $sql = $db->prepare('SELECT id, picture FROM clothes WHERE id=?');
@@ -25,4 +25,4 @@ unlink($pass);
     <a class="return" href="javascript:re.submit()"><img src="pictures/navigationj_back.png" width="100" height="50"></a>
 </form>
 
-<?php require('footer.php') ?>
+<?php require_once('footer.php') ?>

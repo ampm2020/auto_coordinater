@@ -1,13 +1,8 @@
 <?php
-//ログインチェック
-if(!empty($_SESSION['id'])){
-    $members = $db->prepare('SELECT * FROM members WHERE id=?');
-    $members->execute(array($_SESSION['id']));
-    $member = $members->fetch();
-    $name = $_SESSION['name'];
-}else{
-    header('Location: login.php');
-    exit();
+//セッションが空（非ログイン時）か、セッションIDとcookieが一致しない場合は弾く
+if(empty($_SESSION) || $_SESSION['session_id'] !== $_COOKIE['Cookie']){
+     header('Location: login.php');
+     exit();   
 }
 
 ?>

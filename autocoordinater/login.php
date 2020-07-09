@@ -1,40 +1,51 @@
 <?php
 session_start();
-require('header.php');
-require('dbconnect.php');
+require_once('header.php');
+require_once('dbconnect.php');
 
-//二重ログイン対策(未実装)
-if(!empty($_SESSION)){
+/*
+ログインチェック
+既にログイン済みの場合はindex.phpに飛ばす
+セッションidとcookieが同一ならログイン済みと判定
+ */
+if(!empty($_SESSION) && $_SESSION['session_id'] === $_COOKIE['Cookie']){
     header('Location: index.php');
     exit();
 }
 
-//リクエストパラメータが空でない場合ログイン処理を行う
+/*
+ログイン処理
+リクエストパラメータと同じname, passwordのアカウントがDBMSに登録されていればログイン成功
+ */
 if(!empty($_POST)){
     if($_POST['name'] !== '' && $_POST['password'] !== ''){
         $login = $db->prepare('SELECT * FROM members WHERE name=? AND password=?');
         $login->execute(array(
           $_POST['name'],
-          $_POST['password']
+          sha1($_POST['password'])//パスワードはハッシュ化する
         ));
         $member = $login->fetch();
+        //該当アカウントが存在する場合はセッション変数、cookieに情報を格納する
         if($member){
             $_SESSION['id'] = $member['id'];
             $_SESSION['name'] = $member['name'];
-            $_SESSION['time'] = time();
+            $_SESSION['session_id'] = session_id();
 
+            //ゲストアカウントでログインした場合は特殊処理を行う
             if($_SESSION['name']==='ゲスト'){
-                require('guestlogin.php');
+                require_once('guestlogin.php');
             }
-
-            setcookie('Cookie', $member['name'], time()+60*60*24*7);
+            //cookieにセッションidをセットする
+            setcookie('Cookie', $_SESSION['session_id'], time()+60*60*24*7);
 
             header('Location: index.php');
             exit();
         }else{
+            //ニックネームかパスワードが間違っているとき
             $error['login'] = 'failed';
         }
     }else{
+        //テキストボックスが空の時とき
         $error['login'] = 'blank';
     }
 }
@@ -46,8 +57,8 @@ if($error['login']==='blank'){
 ?>
 
 <h1>自動コーディネータ　ver.0.7</h1>
-<p>その名の通り、外出時の服を自動で選んでくれるアプリケーションです。<br>
-あらかじめ自分の持っている服を登録しておくと、その中から気温に合った組み合わせを選びます。<br>
+<p>自分の持っている服を登録しておくと、気温を入力するだけで自動でコーディネートしてくれるアプリケーションです。<br>
+(このページはPHPの学習を目的として製作されたものです)<br>
 <a href="explanation.php">このアプリについて</a></p><br>
 
 <form atcion="" method="post">
@@ -55,7 +66,7 @@ if($error['login']==='blank'){
     <?php if(!empty($alart))echo '<span class="alart">'.$alart.'</span>';?>
     <tr>
         <td>ニックネーム</td>
-        <td><input type="text" name="name" value="<?php echo $_COOKIE['Cookie'] ?>"></td>
+        <td><input type="text" name="name" value=""></td>
     </tr>
     <tr>
         <td>パスワード</td>
@@ -67,11 +78,12 @@ if($error['login']==='blank'){
     </table>
 </form>
 
-<br>アカウント作成は<a href="regist_user.php" style="font-weight: bold;">こちら</a>
+<br><a href="regist_user.php" style="font-weight: bold;">アカウント作成</a><br><br>
+<a href="delete_user.php">アカウントの削除</a>
 <hr>
-<br>※以下のニックネームとパスワードでお試しログインができます。<br>
+<br>※以下のニックネームとパスワードでゲストアカウントによるお試しログインができます。<br>
 ニックネーム：ゲスト<br>
-パスワード：password<br>
-ゲストアカウントには最初から幾つかの服が登録されているため、このアプリの動作を手軽に体験することができます。<br>
-服の追加や削除も問題なくできますが、一度画面を閉じたりログアウトしてしまうと変更がリセットされます。<br>
-<?php require('footer.php'); ?>
+パスワード：password<br><br>
+ゲストアカウントには最初からいくつかの服が登録されているため、手軽にアプリの動作を確認することができます。<br>
+服の追加・削除も可能ですが、ブラウザを閉じたりログアウトすると状態がリセットされます。<br>
+<?php require_once('footer.php'); ?>
