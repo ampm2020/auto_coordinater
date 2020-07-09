@@ -10,7 +10,7 @@ while($res = $result->fetch()){
     $pass .= $res['picture'];
     unlink($pass);
 }
-$db->query('DELETE FROM chothes WHERE owner="ゲスト"');
+$db->query('DELETE FROM clothes WHERE owner="ゲスト"');
 
 //サンプルデータを新しく登録する
 $db->query('INSERT INTO clothes(owner, type, picture) VALUES("ゲスト", "inner", "sample1.png")');
