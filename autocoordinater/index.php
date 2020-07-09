@@ -58,7 +58,7 @@ if(!is_empty($_POST['max_temperature']) && !is_empty($_POST['min_temperature']))
 }
 ?>
 
-<h1>自動コーディネータ　ver.0.7</h1><!---ユーザー名はエスケープ処理してから表示する--->
+<h1>自動コーディネータ　ver.0.9</h1><!---ユーザー名はエスケープ処理してから表示する--->
 <p>ようこそ、<?php echo '<span style="font-weight: bold;">'.htmlspecialchars($name, ENT_QUOTES).'</span>';?>さん。
 <a href="logout.php" style="mergin-left: 20px;">ログアウト</a></p>
 
